@@ -94,13 +94,13 @@ def parseMZDATA(options):
     return result
 
 
-def writeResults(stream, spectrum, scores=None):
+def writeResults(stream, spectrum, options, scores=None):
     if scores is not None:
         rt = spectrum.time
         for mz, amp, val in zip(spectrum.mzs, spectrum.intensities, scores):
 #            if val > 0.0:
 #                print >> stream, '{}, {}, {}, {}'.format(rt, mz, amp, val)
-            if val[0] > 0.0:
+            if val[0] > 0.0 or options.fullOutput:
                 print >> stream, '{}, {}, {}, {}'.format(rt, mz, amp, ', '.join([str(v) for v in val]))
     else:
         rt = spectrum.time

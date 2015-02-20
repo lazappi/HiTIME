@@ -104,6 +104,9 @@ parser.add_argument('--minSample',
                     default=DEFAULTMINSAMPLE,
                     action='store',
                     type=float)
+parser.add_argument('--fullOutput',
+                    action='store_true',
+                    help='output all points, including those with zero scores')
 
 
 def main(MPI=None):
@@ -181,7 +184,7 @@ def main(MPI=None):
                 raw_data, scores = COMM.recv(source=MPI.ANY_SOURCE, status=status)
                 source = status.Get_source()
             if raw_data is not None:
-                md_io.writeResults(data_out, raw_data, scores)
+                md_io.writeResults(data_out, raw_data, options, scores)
 
             ## Read data chunk
             try:
