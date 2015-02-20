@@ -117,6 +117,8 @@ def MZMLtoSpectrum(options):
     time = 0
     msrun = pymzml.run.Reader(filename)
     for n,spectrum in enumerate(msrun):
+        if spectrum['id'] == 'TIC': # This ID does not hold spectrum data
+            continue                # and should be skipped
         mzData = np.array(spectrum.mz, dtype="float32")
         intData = np.array(spectrum.i, dtype="uint64")
         points += len(intData)
